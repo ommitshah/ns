@@ -1,0 +1,23 @@
+{
+  "name": "nodeschool",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "lodash": "~3.10.1",
+    "q": "~1.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ommitshah/ns.git"
+  },
+  "author": "Ommit Shah",
+  "license": "Apache Software License 2.0",
+  "bugs": {
+    "url": "https://github.com/ommitshah/ns/issues"
+  }
+}
