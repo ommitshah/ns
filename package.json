@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "lodash": "~3.10.1",
-    "q": "~1.4.1"
+    "q": "~1.4.1",
+    "q-io": "~1.13.1"
   },
   "devDependencies": {},
   "scripts": {
