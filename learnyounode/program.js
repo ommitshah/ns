@@ -2,17 +2,19 @@ var HTTP = require('q-io/http'),
   Q = require('q'),
   util = require('util'),
   _ = require('lodash'),
-  net = require('net');
+  net = require('net'),
+  http = require('http'),
+  fs = require('fs'),
   strftime = require('strftime');
 
-var port = parseInt(process.argv[2]);
+var port = Number(process.argv[2]);
+var filename = process.argv[3];
 
-var server = net.createServer(function(socket) {
-  socket.end(now());
+var stream = fs.createReadStream(filename);
+
+var server = http.createServer(function(req, res) {
+  stream.pipe(res);
 });
 
 server.listen(port);
-function now() {
-  return strftime('%Y-%m-%d %H:%M')+ '\n';
-}
 
