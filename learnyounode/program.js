@@ -1,33 +1,27 @@
-var HTTP = require('q-io/http'),
-  Q = require('q'),
-  util = require('util'),
+var joey = require('joey'),
   _ = require('lodash'),
-  net = require('net'),
-  http = require('http'),
-  fs = require('fs'),
-  strftime = require('strftime');
+  Q = require('q'),
+  url = require('url');
 
-
-var handler = function (req, res) {
-  var deferred = Q.defer();
-
-  res.headers = [];
-  if (req.method === 'POST') {
-    res.status = 200;
-    Q.when(req.body.read())
-      .then(function (body) {
-        res.body = [body.toString().toUpperCase()];
-        deferred.resolve(res);
+joey
+  .log()
+  .error()
+  .route(function ($) {
+    $("api/parsetime")
+      .method('GET')
+      .contentType('application/json')
+      .contentApp(function (req) {
+        var string = url.parse(req.url, true).query['iso'];
+        var d = new Date(string);
+        return [JSON.stringify({hour: d.getHours(), minute: d.getMinutes(), second: d.getSeconds()})];
       });
-  } else {
-    res.status = 400;
-    deferred.resolve(res);
-  }
-
-  return deferred.promise;
-};
-
-var server = HTTP.Server(handler);
-
-server.listen(Number(process.argv[2]));
-
+    ''.test
+    $("api/unixtime")
+      .method('GET')
+      .contentType('application/json')
+      .contentApp(function (req) {
+        var string = url.parse(req.url, true).query['iso'];
+        var d = new Date(string);
+        return [JSON.stringify({unixtime: d.getTime()})];
+      });
+  }).listen(process.argv[2]);
