@@ -7,14 +7,27 @@ var HTTP = require('q-io/http'),
   fs = require('fs'),
   strftime = require('strftime');
 
-var port = Number(process.argv[2]);
-var filename = process.argv[3];
 
-var stream = fs.createReadStream(filename);
+var handler = function (req, res) {
+  var deferred = Q.defer();
 
-var server = http.createServer(function(req, res) {
-  stream.pipe(res);
-});
+  res.headers = [];
+  if (req.method === 'POST') {
+    res.status = 200;
+    Q.when(req.body.read())
+      .then(function (body) {
+        res.body = [body.toString().toUpperCase()];
+        deferred.resolve(res);
+      });
+  } else {
+    res.status = 400;
+    deferred.resolve(res);
+  }
 
-server.listen(port);
+  return deferred.promise;
+};
+
+var server = HTTP.Server(handler);
+
+server.listen(Number(process.argv[2]));
 
